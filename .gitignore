@@ -1,0 +1,18 @@
+# Secrets
+.env
+
+# Python
+__pycache__/
+*.py[cod]
+*.log
+
+# Virtualenv
+.venv/
+env/
+venv/
+
+# IDEs
+.idea/
+
+# Django
+*.sqlite3
