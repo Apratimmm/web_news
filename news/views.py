@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from .newsapi import get_news
 
-def firsthome(request):
+def initalhome(request):
     return render(request,'news/actualhomepage.html')
 
 def home(request):
