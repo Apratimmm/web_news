@@ -20,6 +20,8 @@
         </div>
     </div>
 
+    <button onclick="scrollToTop()" id="topBtn" class="btn btn-outline-info" title="↑"><strong>TOP</strong></button>
+
 {% block content %}
 {% endblock %}
 
@@ -40,6 +42,39 @@
         border: solid 1.5px;
     }
 
+    #topBtn
+    {
+        display: none;
+        position: fixed;
+        bottom: 20px;
+        right: 30px;
+        z-index: 99;
+        cursor: pointer;
+        padding: 12px 16px;
+        border-radius: 8px;
+        font-size: 18px;
+    }
+
+    #topBtn:hover
+    {
+        background-color: #0056b3;
+    }
+
 </style>
 </body>
+<script>
+        window.onscroll = function () {
+            const topBtn = document.getElementById("topBtn");
+            if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
+                topBtn.style.display = "block";
+            } else {
+                topBtn.style.display = "none";
+            }
+        };
+
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+</script>
 </html>
