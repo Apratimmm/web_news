@@ -7,11 +7,10 @@ This is a Django-based web app that fetches and displays the latest news headlin
 # Features
 
 - Browse top headlines by category (e.g., General, Sports, Technology)
-- Each news tab has components like image, title, description, source, url_to_details, author and date_published
+- Each news card has components like image, title, description, source, url_to_details, author and date_published
 - Responsive layout with Bootstrap 4
 - API-powered data (no local database needed)
-- Clean card layout with images, source, and author
-  
+
 ---
 
 ## Technologies Used
