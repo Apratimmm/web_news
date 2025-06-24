@@ -4,7 +4,6 @@ from . import views
 
 
 urlpatterns=[
-
-    path('',views.actualhome),
+    path('',views.firsthome),
     path('news/',views.home)
 ]
