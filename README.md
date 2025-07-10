@@ -2,17 +2,17 @@
 
 This is a Django-based web app that fetches and displays the latest news headlines by category using the [NewsAPI.org](https://newsapi.org/) service.
 
----
+
+
 
 # Features
 
 - Browse top headlines by category (e.g., General, Sports, Technology)
-- Each news tab has components like image, title, description, source, url_to_details, author and date_published
+- Each news card has components like image, title, description, source, url_to_details, author and date_published
 - Responsive layout with Bootstrap 4
 - API-powered data (no local database needed)
-- Clean card layout with images, source, and author
-  
----
+
+
 
 ## Technologies Used
 
@@ -21,15 +21,14 @@ This is a Django-based web app that fetches and displays the latest news headlin
 - HTML, CSS, Bootstrap
 - NewsAPI
 
----
+
 
 ## Setup Instructions
 
 1. **Clone the repository**
-
-    ```bash
-    git clone https://github.com/Aapra99/web_news.git
-    cd web_news
+   ```bash
+   git clone https://github.com/Apratimmm/web_news.git
+   cd web_news
 
 2. **Create and activate a virtual environment**
 
@@ -51,5 +50,4 @@ This is a Django-based web app that fetches and displays the latest news headlin
 
     ```bash
     python manage.py runserver
-
-
+    
