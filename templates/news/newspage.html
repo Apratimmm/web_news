@@ -1,33 +1,177 @@
 {% extends 'news/actualhomepage.html' %}
-{% block title %}News{% endblock %}
+{% block title %}web_news{% endblock %}
 
 {% block content %}
-
-<div class="container">
-  <div class="row">
-    {% for article in articles %}
-      <div class="col-md-4 mb-4">
-        <div class="card h-100" style="width: 100%;">
-          {% if article.urlToImage %}
-            <img class="card-img-top" src="{{ article.urlToImage }}">
-          {% endif %}
-          <div class="card-body">
-            <h5 class="card-title" style="">{{ article.title }}</h5>
-          </div>
-          <ul class="list-group list-group-flush">
-            {% if article.description %}
-              <li class="list-group-item">{{ article.description }}<a href="{{ article.url }}"> Details</a></li>
-            {% endif %}
-            <li class="list-group-item"><strong>{{ article.source.name }}</strong></li>
-            {% if article.author %}
-              <li class="list-group-item">By "{{ article.author }}"</li>
-            {% endif %}
-            <li class="list-group-item">{{ article.publishedAt }}</li>
-          </ul>
-        </div>
+<div class="row">
+  {% for article in articles %}
+  <div class="col-xl-4 col-lg-6 col-md-12 mb-4">
+    <div class="news-card h-100" style="animation-delay: {{ forloop.counter|add:forloop.counter }}00ms;">
+      {% if article.urlToImage %}
+      <div class="article-image-container">
+        <img class="article-image" src="{{ article.urlToImage }}" alt="{{ article.title }}"
+          onerror="this.src='https://images.unsplash.com/photo-1585829365234-78d9b9c6368d?w=800&auto=format&fit=crop&q=60'">
+        <div class="article-badge">{{ article.source.name }}</div>
       </div>
-    {% endfor %}
+      {% else %}
+      <div class="article-image-container no-image-placeholder">
+        <i class="fas fa-image mb-2" style="font-size: 2rem; opacity: 0.3;"></i>
+        <span class="text-muted">No media available</span>
+        <div class="article-badge">{{ article.source.name }}</div>
+      </div>
+      {% endif %}
+      <div class="article-body">
+        <h5 class="article-title">{{ article.title }}</h5>
+        {% if article.description %}
+        <p class="article-description text-muted">
+          {{ article.description|truncatechars:120 }}
+        </p>
+        {% endif %}
+        <div class="article-meta">
+          {% if article.author and "http" not in article.author and "www." not in article.author %}
+          <span class="article-author"><i class="fas fa-user-edit mr-1"></i>{{ article.author|truncatechars:20 }}</span>
+          {% endif %}
+          <span class="article-date"><i class="far fa-calendar-alt mr-1"></i>{{ article.publishedAt|slice:":10"}}</span>
+        </div>
+        <a href="{{ article.url }}" target="_blank" class="read-more-btn">
+          Read Full Story <i class="fas fa-external-link-alt ml-1"></i>
+        </a>
+      </div>
+    </div>
   </div>
+  {% endfor %}
 </div>
 
+<style>
+  .news-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    opacity: 0;
+    animation: fadeInUp 0.5s ease forwards;
+  }
+
+  .news-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    border-color: var(--primary);
+  }
+
+  .article-image-container {
+    position: relative;
+    height: 200px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.02);
+  }
+
+  .no-image-placeholder {
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.02) 0%, rgba(0, 0, 0, 0.05) 100%);
+    font-size: 0.85rem;
+    font-weight: 500;
+  }
+
+  .article-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+
+  .news-card:hover .article-image {
+    transform: scale(1.05);
+  }
+
+  .article-badge {
+    position: absolute;
+    bottom: 12px;
+    left: 12px;
+    background: var(--primary);
+    color: white;
+    padding: 4px 12px;
+    border-radius: 8px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  .article-body {
+    padding: 20px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .article-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    line-height: 1.4;
+    margin-bottom: 12px;
+    color: var(--text-main);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .article-description {
+    font-size: 0.9rem;
+    line-height: 1.6;
+    margin-bottom: 15px;
+    flex-grow: 1;
+  }
+
+  .article-meta {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-top: auto;
+    padding-top: 15px;
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+    margin-bottom: 15px;
+  }
+
+  .read-more-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background: rgba(79, 70, 229, 0.1);
+    color: var(--primary);
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-align: center;
+    transition: all 0.3s ease;
+    text-decoration: none !important;
+  }
+
+  .read-more-btn:hover {
+    background: var(--primary);
+    color: white;
+    transform: translateY(-2px);
+  }
+
+  /* Animation for entering cards */
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+</style>
 {% endblock %}
